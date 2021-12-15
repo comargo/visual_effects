@@ -11,6 +11,10 @@
 ///A variety of functions for working with color, palletes, and leds
 ///@{
 
+/// fill_solid -   fill a range of LEDs with a solid color
+///                Example: fill_solid( leds, NUM_LEDS, CRGB(50,0,200));
+void fill_solid( RGB * leds, int numToFill, RGB color);
+
 /// fill_rainbow - fill a range of LEDs with a rainbow of colors, at
 ///                full saturation and full value (brightness)
 void fill_rainbow( RGB * pFirstLED, int numToFill,

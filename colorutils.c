@@ -9,6 +9,13 @@
 #include "hsv2rgb.h"
 #include "colorpalettes.h"
 
+void fill_solid( RGB * leds, int numToFill, RGB color)
+{
+    for( int i = 0; i < numToFill; ++i) {
+        leds[i] = color;
+    }
+}
+
 void fill_rainbow(RGB *pFirstLED, int numToFill, uint8_t initialhue, uint8_t deltahue)
 {
 	HSV hsv = { .h = initialhue, .s = 240, .v = 255 };

@@ -14,16 +14,16 @@
 #define HSV_SECTION_6 (0x20)
 #define HSV_SECTION_3 (0x40)
 
-uint32_t hsv2rgb_raw(uint32_t hsv)
+RGB hsv2rgb_raw(HSV hsv)
 {
 	// Convert hue, saturation and brightness ( HSV/HSB ) to RGB
 	// "Dimming" is used on saturation and brightness to make
 	// the output more visually linear.
 
 	// Apply dimming curves
-	uint8_t hue = HUE(hsv);
-	uint8_t value = APPLY_DIMMING(VAL(hsv));
-	uint8_t saturation = SAT(hsv);
+	uint8_t hue = hsv.h;
+	uint8_t value = APPLY_DIMMING(hsv.v);
+	uint8_t saturation = hsv.s;
 
 	// The brightness floor is minimum number that all of
 	// R, G, and B will be set to.
@@ -82,18 +82,18 @@ uint32_t hsv2rgb_raw(uint32_t hsv)
 
 	switch (section) {
 	case 0:
-		return RGB(rampdown_adj_with_floor, rampup_adj_with_floor, brightness_floor);
+		return (RGB){{rampdown_adj_with_floor, rampup_adj_with_floor, brightness_floor}};
 	case 1:
-		return RGB(brightness_floor, rampdown_adj_with_floor, rampup_adj_with_floor);
+		return (RGB){{brightness_floor, rampdown_adj_with_floor, rampup_adj_with_floor}};
 	case 2:
-		return RGB(rampup_adj_with_floor, brightness_floor, rampdown_adj_with_floor);
+		return (RGB){{rampup_adj_with_floor, brightness_floor, rampdown_adj_with_floor}};
 	}
-	return 0;
+	return (RGB){{0}};
 }
 
-uint32_t hsv2rgb_spectrum( uint32_t hsv)
+RGB hsv2rgb_spectrum( HSV hsv)
 {
-	return hsv2rgb_raw(HSV(scale8(HUE(hsv),191), SAT(hsv), VAL(hsv)));
+	return hsv2rgb_raw((HSV){{scale8(hsv.h,191), hsv.s, hsv.v}});
 }
 
 
@@ -103,7 +103,7 @@ uint32_t hsv2rgb_spectrum( uint32_t hsv)
 #define K170 170
 #define K85  85
 
-uint32_t hsv2rgb_rainbow( uint32_t hsv)
+RGB hsv2rgb_rainbow( HSV hsv)
 {
     // Yellow has a higher inherent brightness than
     // any other color; 'pure' yellow is perceived to
@@ -125,9 +125,9 @@ uint32_t hsv2rgb_rainbow( uint32_t hsv)
     const uint8_t Gscale = 0;
 
 
-    uint16_t hue = HUE(hsv);
-    uint8_t sat = SAT(hsv);
-    uint8_t val = VAL(hsv);
+    uint16_t hue = hsv.h;
+    uint8_t sat = hsv.s;
+    uint8_t val = hsv.v;
 
     uint8_t offset = hue & 0x1F; // 0..31
 
@@ -274,5 +274,5 @@ uint32_t hsv2rgb_rainbow( uint32_t hsv)
         }
     }
 
-    return RGB(r,g,b);
+    return (RGB){{r,g,b}};
 }

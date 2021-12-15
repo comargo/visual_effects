@@ -10,17 +10,33 @@
 
 #include <stdint.h>
 
-#define RED(c) ((uint8_t)(((c)>>16)&0xFF))
-#define GREEN(c) ((uint8_t)(((c)>>8)&0xFF))
-#define BLUE(c) ((uint8_t)((c)&0xFF))
+typedef union RGB {
+	uint8_t raw[3];
+	struct {
+		uint8_t r;
+		uint8_t g;
+		uint8_t b;
+	};
+} RGB;
 
-#define RGB(r,g,b) ((uint32_t)(((r)<<16)|((g)<<8)|(b)))
+typedef union NRGB
+{
+	uint8_t raw[4];
+	struct
+	{
+		uint8_t index;
+		RGB rgb;
+	};
+	uint32_t dw;
+} NRGB;
 
-#define HUE(c) ((uint8_t)(((c)>>16)&0xFF))
-#define SAT(c) ((uint8_t)(((c)>>8)&0xFF))
-#define VAL(c) ((uint8_t)((c)&0xFF))
-
-#define HSV(h,s,v) ((uint32_t)(((h)<<16)|((s)<<8)|(v)))
-
+typedef union HSV {
+	struct {
+		uint8_t h;
+		uint8_t s;
+		uint8_t v;
+	};
+	uint8_t raw[3];
+} HSV;
 
 #endif /* COLOR_TYPES_H_ */

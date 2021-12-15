@@ -10,8 +10,8 @@
 
 #include <stdint.h>
 
-uint32_t hsv2rgb_raw(uint32_t hsv);
-uint32_t hsv2rgb_spectrum( uint32_t hsv);
-uint32_t hsv2rgb_rainbow( uint32_t hsv);
+RGB hsv2rgb_raw(HSV hsv);
+RGB hsv2rgb_spectrum( HSV hsv);
+RGB hsv2rgb_rainbow( HSV hsv);
 
 #endif /* HSV2RGB_H_ */

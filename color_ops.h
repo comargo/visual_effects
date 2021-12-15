@@ -11,13 +11,14 @@
 #include "color_types.h"
 #include "lib8tion.h"
 
-static inline uint32_t color_sum(uint32_t c1, uint32_t c2)
+static inline RGB color_sum(RGB c1, RGB c2)
 {
-  return RGB(
-      qadd8(RED(c1), RED(c2)),
-      qadd8(GREEN(c1), GREEN(c2)),
-      qadd8(BLUE(c1), BLUE(c2))
-      );
+  RGB out = {
+      .r = qadd8(c1.r, c2.r),
+      .g = qadd8(c1.g, c2.g),
+      .b = qadd8(c1.b, c2.b)
+  };
+  return out;
 }
 
 

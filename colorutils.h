@@ -11,23 +11,9 @@
 ///A variety of functions for working with color, palletes, and leds
 ///@{
 
-static inline void set_pixel(uint8_t *pLED, uint32_t rgb)
-{
-  pLED[0] = RED(rgb);
-  pLED[1] = GREEN(rgb);
-  pLED[2] = BLUE(rgb);
-}
-
-
-static inline uint32_t get_pixel(uint8_t *pLED)
-{
-  return RGB(pLED[0], pLED[1], pLED[2]);
-}
-
-
 /// fill_rainbow - fill a range of LEDs with a rainbow of colors, at
 ///                full saturation and full value (brightness)
-void fill_rainbow( uint8_t * pFirstLED, int numToFill,
+void fill_rainbow( RGB * pFirstLED, int numToFill,
                    uint8_t initialhue,
                    uint8_t deltahue);
 
@@ -65,38 +51,38 @@ typedef enum { FORWARD_HUES, BACKWARD_HUES, SHORTEST_HUES, LONGEST_HUES } TGradi
 //                     Unlike HSV, there is no 'color wheel' in RGB space,
 //                     and therefore there's only one 'direction' for the
 //                     gradient to go, and no 'direction code' is needed.
-void fill_gradient_RGB( uint8_t* leds,
-                   uint16_t startpos, uint32_t startcolor,
-                   uint16_t endpos,   uint32_t endcolor );
-void fill_gradient_RGB2( uint8_t* leds, uint16_t numLeds, uint32_t c1, uint32_t c2);
-void fill_gradient_RGB3( uint8_t* leds, uint16_t numLeds, uint32_t c1, uint32_t c2, uint32_t c3);
-void fill_gradient_RGB4( uint8_t* leds, uint16_t numLeds, uint32_t c1, uint32_t c2, uint32_t c3, uint32_t c4);
+void fill_gradient_RGB( RGB* leds,
+                   uint16_t startpos, RGB startcolor,
+                   uint16_t endpos,   RGB endcolor );
+void fill_gradient_RGB2( RGB* leds, uint16_t numLeds, RGB c1, RGB c2);
+void fill_gradient_RGB3( RGB* leds, uint16_t numLeds, RGB c1, RGB c2, RGB c3);
+void fill_gradient_RGB4( RGB* leds, uint16_t numLeds, RGB c1, RGB c2, RGB c3, RGB c4);
 
 
 // fadeLightBy and fade_video - reduce the brightness of an array
 //                              of pixels all at once.  Guaranteed
 //                              to never fade all the way to black.
 //                              (The two names are synonyms.)
-void fadeLightBy(   uint8_t* leds, uint16_t num_leds, uint8_t fadeBy);
-void fade_video(    uint8_t* leds, uint16_t num_leds, uint8_t fadeBy);
+void fadeLightBy(   RGB* leds, uint16_t num_leds, uint8_t fadeBy);
+void fade_video(    RGB* leds, uint16_t num_leds, uint8_t fadeBy);
 
 // nscale8_video - scale down the brightness of an array of pixels
 //                 all at once.  Guaranteed to never scale a pixel
 //                 all the way down to black, unless 'scale' is zero.
-void nscale8_video( uint8_t* leds, uint16_t num_leds, uint8_t scale);
+void nscale8_video( RGB *leds, uint16_t num_leds, uint8_t scale);
 
 // fadeToBlackBy and fade_raw - reduce the brightness of an array
 //                              of pixels all at once.  These
 //                              functions will eventually fade all
 //                              the way to black.
 //                              (The two names are synonyms.)
-void fadeToBlackBy( uint8_t* leds, uint16_t num_leds, uint8_t fadeBy);
-void fade_raw(      uint8_t* leds, uint16_t num_leds, uint8_t fadeBy);
+void fadeToBlackBy( RGB *leds, uint16_t num_leds, uint8_t fadeBy);
+void fade_raw(      RGB *leds, uint16_t num_leds, uint8_t fadeBy);
 
 // nscale8 - scale down the brightness of an array of pixels
 //           all at once.  This function can scale pixels all the
 //           way down to black even if 'scale' is not zero.
-void nscale8(       uint8_t* leds, uint16_t num_leds, uint8_t scale);
+void nscale8(       RGB *leds, uint16_t num_leds, uint8_t scale);
 
 // fadeUsingColor - scale down the brightness of an array of pixels,
 //                  as though it were seen through a transparent
@@ -110,29 +96,29 @@ void nscale8(       uint8_t* leds, uint16_t num_leds, uint8_t scale);
 //                  You can also use colormasks like CRGB::Blue to
 //                  zero out the red and green elements, leaving blue
 //                  (largely) the same.
-void fadeUsingColor( uint8_t* leds, uint16_t numLeds, uint32_t colormask);
+void fadeUsingColor( RGB *leds, uint16_t numLeds, RGB colormask);
 
 
 // Pixel blending
 //
 // blend - computes a new color blended some fraction of the way
 //         between two other colors.
-uint32_t  blend( uint32_t p1, uint32_t p2, fract8 amountOfP2 );
+RGB  blend( RGB p1, RGB p2, fract8 amountOfP2 );
 
 // blend - computes a new color blended array of colors, each
 //         a given fraction of the way between corresponding
 //         elements of two source arrays of colors.
 //         Useful for blending palettes.
-uint8_t* blend_leds( uint8_t* src1, uint8_t* src2, uint8_t* dest,
+RGB* blend_leds( RGB* src1, RGB* src2, RGB* dest,
              uint16_t count, fract8 amountOfsrc2 );
 
 // nblend - destructively modifies one color, blending
 //          in a given fraction of an overlay color
-uint32_t* nblend( uint32_t *existing, uint32_t overlay, fract8 amountOfOverlay );
+RGB* nblend( RGB *existing, RGB overlay, fract8 amountOfOverlay );
 
 // nblend - destructively blends a given fraction of
 //          a new color array into an existing color array
-void  nblend_leds( uint8_t* existing, uint8_t* overlay, uint16_t count, fract8 amountOfOverlay);
+void  nblend_leds( RGB* existing, RGB* overlay, uint16_t count, fract8 amountOfOverlay);
 // blur1d: one-dimensional blur filter. Spreads light to 2 line neighbors.
 // blur2d: two-dimensional blur filter. Spreads light to 8 XY neighbors.
 //
@@ -146,7 +132,7 @@ void  nblend_leds( uint8_t* existing, uint8_t* overlay, uint16_t count, fract8 a
 //         calls to 'blur' will also result in the light fading,
 //         eventually all the way to black; this is by design so that
 //         it can be used to (slowly) clear the LEDs to black.
-void blur1d( uint8_t* leds, uint16_t numLeds, fract8 blur_amount);
+void blur1d( RGB *leds, uint16_t numLeds, fract8 blur_amount);
 
 
 // CRGB HeatColor( uint8_t temperature)
@@ -156,7 +142,7 @@ void blur1d( uint8_t* leds, uint16_t numLeds, fract8 blur_amount);
 // Heat is specified as an arbitrary scale from 0 (cool) to 255 (hot).
 // This is NOT a chromatically correct 'black body radiation'
 // spectrum, but it's surprisingly close, and it's fast and small.
-uint32_t HeatColor( uint8_t temperature);
+RGB HeatColor( uint8_t temperature);
 
 
 // Palettes
@@ -216,28 +202,28 @@ uint32_t HeatColor( uint8_t temperature);
 //
 
 // Convert a 16-entry palette to a 256-entry palette
-void UpscalePalette16_256(uint32_t *srcpal16, uint32_t *destpal256);
+void UpscalePalette16_256(RGB *srcpal16, RGB *destpal256);
 
 // Convert a 16-entry palette to a 32-entry palette
-void UpscalePalette16_32(uint32_t *srcpal16, uint32_t *destpal32);
+void UpscalePalette16_32(RGB *srcpal16, RGB *destpal32);
 
 // Convert a 32-entry palette to a 256-entry palette
-void UpscalePalette32_256(uint32_t *srcpal32, uint32_t *destpal256);
+void UpscalePalette32_256(RGB *srcpal32, RGB *destpal256);
 
 
 typedef enum { NOBLEND=0, LINEARBLEND=1 } TBlendType;
 
-uint32_t ColorFromPalette16( const uint32_t *pal,
+RGB ColorFromPalette16( const RGB *pal,
                       uint8_t index,
                       uint8_t brightness/*=255*/,
                       TBlendType blendType/*=LINEARBLEND*/);
 
-uint32_t ColorFromPalette256( const uint32_t *pal,
+RGB ColorFromPalette256( const RGB *pal,
                        uint8_t index,
                        uint8_t brightness/*=255*/,
                        TBlendType blendType/*=NOBLEND*/ );
 
-uint32_t ColorFromPalette32( const uint32_t *pal,
+RGB ColorFromPalette32( const RGB *pal,
                       uint8_t index,
                       uint8_t brightness/*=255*/,
                       TBlendType blendType/*=LINEARBLEND*/);
@@ -274,12 +260,12 @@ uint32_t ColorFromPalette32( const uint32_t *pal,
 //               The default 'maximim number of changes' here is 12, meaning
 //               that only approximately a quarter of the palette entries
 //               will be changed per call.
-void nblendPaletteTowardPalette16( uint32_t *currentPalette,
-                                uint32_t *targetPalette,
+void nblendPaletteTowardPalette16( RGB *currentPalette,
+		RGB *targetPalette,
                                 uint8_t maxChanges/*=24*/);
 
 
-
+void Palette16FromGradientPalette(RGB *dstPal16, NRGB *srcGradPalette);
 
 //  You can also define a static RGB palette very compactly in terms of a series
 //  of connected color gradients.
@@ -324,11 +310,6 @@ void nblendPaletteTowardPalette16( uint32_t *currentPalette,
 //    DEFINE_GRADIENT_PALETTE macro, this is taken care of automatically.
 //
 
-#define DEFINE_GRADIENT_PALETTE(X) \
-  extern const TProgmemRGBGradientPalette_byte X[] FL_PROGMEM =
-
-#define DECLARE_GRADIENT_PALETTE(X) \
-  extern const TProgmemRGBGradientPalette_byte X[] FL_PROGMEM
 
 
 // Functions to apply gamma adjustments, either:
@@ -346,13 +327,13 @@ void nblendPaletteTowardPalette16( uint32_t *currentPalette,
 // per channel of color resolution, and that very small, subtle shadings
 // may not be visible.
 uint8_t  applyGamma_videoY( uint8_t brightness, float gamma);
-uint32_t applyGamma_videoRGB( uint32_t orig, float gamma);
-uint32_t applyGammaRGB_videoRGB( uint32_t orig, float gammaR, float gammaG, float gammaB);
+RGB applyGamma_videoRGB( RGB orig, float gamma);
+RGB applyGammaRGB_videoRGB( RGB orig, float gammaR, float gammaG, float gammaB);
 // The "n" versions below modify their arguments in-place.
-uint32_t *napplyGamma_videoRGB( uint32_t *rgb, float gamma);
-uint32_t *napplyGammaRGB_videoRGB( uint32_t *rgb, float gammaR, float gammaG, float gammaB);
-void   napplyGamma_videoLeds( uint8_t *rgbarray, uint16_t count, float gamma);
-void   napplyGammaRGB_videoLeds( uint8_t* rgbarray, uint16_t count, float gammaR, float gammaG, float gammaB);
+RGB *napplyGamma_videoRGB( RGB *rgb, float gamma);
+RGB *napplyGammaRGB_videoRGB( RGB *rgb, float gammaR, float gammaG, float gammaB);
+void   napplyGamma_videoLeds( RGB *rgbarray, uint16_t count, float gamma);
+void   napplyGammaRGB_videoLeds( RGB* rgbarray, uint16_t count, float gammaR, float gammaG, float gammaB);
 
 ///@}
 #endif

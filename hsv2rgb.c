@@ -5,6 +5,7 @@
  *      Author: cyril
  */
 
+#include "color_types.h"
 #include "hsv2rgb.h"
 #include "muldiv.h"
 #include "lib8tion.h"

@@ -76,7 +76,7 @@ LIB8STATIC int16_t cos16( uint16_t theta)
 //        On Arduino/AVR, this approximation is more than
 //        20X faster than floating point sin(x) and cos(x)
 //
-const uint8_t b_m16_interleave[] = { 0, 49, 49, 41, 90, 27, 117, 10 };
+static const uint8_t b_m16_interleave[] = { 0, 49, 49, 41, 90, 27, 117, 10 };
 
 /// Fast 8-bit approximation of sin(x). This approximation never varies more than
 /// 2% from the floating point value you'd get by doing

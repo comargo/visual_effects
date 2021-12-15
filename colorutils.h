@@ -269,7 +269,7 @@ void nblendPaletteTowardPalette16( RGB *currentPalette,
                                 uint8_t maxChanges/*=24*/);
 
 
-void Palette16FromGradientPalette(RGB *dstPal16, NRGB *srcGradPalette);
+void Palette16FromGradientPalette(RGB *dstPal16, const NRGB *srcGradPalette);
 
 //  You can also define a static RGB palette very compactly in terms of a series
 //  of connected color gradients.

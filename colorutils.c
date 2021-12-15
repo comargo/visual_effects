@@ -589,7 +589,7 @@ void napplyGammaRGB_videoLeds( RGB* rgbarray, uint16_t count, float gammaR, floa
 // will be, by definition, different from the widths in the gradient
 // palette.  This code attempts to preserve "all the colors", rather than
 // the exact stripe widths at the expense of dropping some colors.
-void Palette16FromGradientPalette(RGB *dstPal16, NRGB *srcGradPalette)
+void Palette16FromGradientPalette(RGB *dstPal16, const NRGB *srcGradPalette)
 {
 	NRGB u;
 	int count = 0;

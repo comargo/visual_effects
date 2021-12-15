@@ -488,7 +488,7 @@ void nblendPaletteTowardPalette16( RGB *current, RGB *target, uint8_t maxChanges
     p1 = (uint8_t*)current;
     p2 = (uint8_t*)target;
 
-    const uint8_t totalChannels = 16*sizeof(uint32_t);
+    const uint8_t totalChannels = 16*sizeof(RGB);
     for( uint8_t i = 0; i < totalChannels; ++i) {
         // if the values are equal, no changes are needed
         if( p1[i] == p2[i] ) { continue; }

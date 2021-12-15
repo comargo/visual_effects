@@ -265,7 +265,7 @@ DECLARE_GRADIENT_PALETTE( bhw1_28_gp ) ;
 //
 // This list of color palettes acts as a "playlist"; you can
 // add or delete, or re-arrange as you wish.
-const NRGB *gGradientPalettes[] = {
+static const NRGB *gGradientPalettes[] = {
   Sunset_Real_gp,
   es_rivendell_15_gp,
   es_ocean_breeze_036_gp,
@@ -304,7 +304,7 @@ const NRGB *gGradientPalettes[] = {
 
 
 // Count of how many cpt-city gradients are defined:
-const uint8_t gGradientPaletteCount =
+static const uint8_t gGradientPaletteCount =
   sizeof( gGradientPalettes) / sizeof( uint32_t* );
 
 

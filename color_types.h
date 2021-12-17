@@ -10,9 +10,11 @@
 
 #include <stdint.h>
 
-typedef union RGB {
+typedef union RGB
+{
 	uint8_t raw[3];
-	struct {
+	struct
+	{
 		uint8_t r;
 		uint8_t g;
 		uint8_t b;
@@ -30,8 +32,10 @@ typedef union NRGB
 	uint32_t dw;
 } NRGB;
 
-typedef union HSV {
-	struct {
+typedef union HSV
+{
+	struct
+	{
 		uint8_t h;
 		uint8_t s;
 		uint8_t v;

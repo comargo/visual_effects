@@ -17,23 +17,22 @@
 ///  the numerator of a fraction whose denominator is 256
 ///  In other words, it computes i * (scale / 256)
 ///  4 clocks AVR with MUL, 2 clocks ARM
-LIB8STATIC_ALWAYS_INLINE uint8_t scale8( uint8_t i, fract8 scale)
+LIB8STATIC_ALWAYS_INLINE uint8_t scale8(uint8_t i, fract8 scale)
 {
-    return (((uint16_t)i) * (1+(uint16_t)(scale))) >> 8;
+	return (((uint16_t) i) * (1 + (uint16_t) (scale))) >> 8;
 }
-
 
 ///  The "video" version of scale8 guarantees that the output will
 ///  be only be zero if one or both of the inputs are zero.  If both
 ///  inputs are non-zero, the output is guaranteed to be non-zero.
 ///  This makes for better 'video'/LED dimming, at the cost of
 ///  several additional cycles.
-LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video( uint8_t i, fract8 scale)
+LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video(uint8_t i, fract8 scale)
 {
-    uint8_t j = (((int)i * (int)scale) >> 8) + ((i&&scale)?1:0);
-    // uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
-    // uint8_t j = (i == 0) ? 0 : (((int)i * (int)(scale) ) >> 8) + nonzeroscale;
-    return j;
+	uint8_t j = (((int) i * (int) scale) >> 8) + ((i && scale) ? 1 : 0);
+	// uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
+	// uint8_t j = (i == 0) ? 0 : (((int)i * (int)(scale) ) >> 8) + nonzeroscale;
+	return j;
 }
 
 /// scale three one byte values by a fourth one, which is treated as
@@ -42,12 +41,12 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video( uint8_t i, fract8 scale)
 ///
 ///         THIS FUNCTION ALWAYS MODIFIES ITS ARGUMENTS IN PLACE
 
-LIB8STATIC void nscale8x3_( uint8_t* r, uint8_t* g, uint8_t* b, fract8 scale)
+LIB8STATIC void nscale8x3_(uint8_t *r, uint8_t *g, uint8_t *b, fract8 scale)
 {
-    uint16_t scale_fixed = scale + 1;
-    *r = (((uint16_t)*r) * scale_fixed) >> 8;
-    *g = (((uint16_t)*g) * scale_fixed) >> 8;
-    *b = (((uint16_t)*b) * scale_fixed) >> 8;
+	uint16_t scale_fixed = scale + 1;
+	*r = (((uint16_t) *r) * scale_fixed) >> 8;
+	*g = (((uint16_t) *g) * scale_fixed) >> 8;
+	*b = (((uint16_t) *b) * scale_fixed) >> 8;
 }
 
 /// scale three one byte values by a fourth one, which is treated as
@@ -57,12 +56,12 @@ LIB8STATIC void nscale8x3_( uint8_t* r, uint8_t* g, uint8_t* b, fract8 scale)
 /// argument.
 ///
 ///         THIS FUNCTION ALWAYS MODIFIES ITS ARGUMENTS IN PLACE
-LIB8STATIC void nscale8x3_video_( uint8_t* r, uint8_t* g, uint8_t* b, fract8 scale)
+LIB8STATIC void nscale8x3_video_(uint8_t *r, uint8_t *g, uint8_t *b, fract8 scale)
 {
-    uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
-    *r = (*r == 0) ? 0 : (((int)*r * (int)(scale) ) >> 8) + nonzeroscale;
-    *g = (*g == 0) ? 0 : (((int)*g * (int)(scale) ) >> 8) + nonzeroscale;
-    *b = (*b == 0) ? 0 : (((int)*b * (int)(scale) ) >> 8) + nonzeroscale;
+	uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
+	*r = (*r == 0) ? 0 : (((int) *r * (int) (scale)) >> 8) + nonzeroscale;
+	*g = (*g == 0) ? 0 : (((int) *g * (int) (scale)) >> 8) + nonzeroscale;
+	*b = (*b == 0) ? 0 : (((int) *b * (int) (scale)) >> 8) + nonzeroscale;
 }
 
 ///  scale two one byte values by a third one, which is treated as
@@ -71,11 +70,11 @@ LIB8STATIC void nscale8x3_video_( uint8_t* r, uint8_t* g, uint8_t* b, fract8 sca
 ///
 ///         THIS FUNCTION ALWAYS MODIFIES ITS ARGUMENTS IN PLACE
 
-LIB8STATIC void nscale8x2_( uint8_t* i, uint8_t* j, fract8 scale)
+LIB8STATIC void nscale8x2_(uint8_t *i, uint8_t *j, fract8 scale)
 {
-    uint16_t scale_fixed = scale + 1;
-    *i = (((uint16_t)*i) * scale_fixed ) >> 8;
-    *j = (((uint16_t)*j) * scale_fixed ) >> 8;
+	uint16_t scale_fixed = scale + 1;
+	*i = (((uint16_t) *i) * scale_fixed) >> 8;
+	*j = (((uint16_t) *j) * scale_fixed) >> 8;
 }
 
 ///  scale two one byte values by a third one, which is treated as
@@ -86,31 +85,29 @@ LIB8STATIC void nscale8x2_( uint8_t* i, uint8_t* j, fract8 scale)
 ///
 ///         THIS FUNCTION ALWAYS MODIFIES ITS ARGUMENTS IN PLACE
 
-
-LIB8STATIC void nscale8x2_video_( uint8_t* i, uint8_t* j, fract8 scale)
+LIB8STATIC void nscale8x2_video_(uint8_t *i, uint8_t *j, fract8 scale)
 {
-    uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
-    *i = (*i == 0) ? 0 : (((int)*i * (int)(scale) ) >> 8) + nonzeroscale;
-    *j = (*j == 0) ? 0 : (((int)*j * (int)(scale) ) >> 8) + nonzeroscale;
+	uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
+	*i = (*i == 0) ? 0 : (((int) *i * (int) (scale)) >> 8) + nonzeroscale;
+	*j = (*j == 0) ? 0 : (((int) *j * (int) (scale)) >> 8) + nonzeroscale;
 }
-
 
 /// scale a 16-bit unsigned value by an 8-bit value,
 ///         considered as numerator of a fraction whose denominator
 ///         is 256. In other words, it computes i * (scale / 256)
 
-LIB8STATIC_ALWAYS_INLINE uint16_t scale16by8( uint16_t i, fract8 scale )
+LIB8STATIC_ALWAYS_INLINE uint16_t scale16by8(uint16_t i, fract8 scale)
 {
-    return (i * (1+((uint16_t)scale))) >> 8;
+	return (i * (1 + ((uint16_t) scale))) >> 8;
 }
 
 /// scale a 16-bit unsigned value by a 16-bit value,
 ///         considered as numerator of a fraction whose denominator
 ///         is 65536. In other words, it computes i * (scale / 65536)
 
-LIB8STATIC uint16_t scale16( uint16_t i, fract16 scale )
+LIB8STATIC uint16_t scale16(uint16_t i, fract16 scale)
 {
-    return  ((uint32_t)(i) * (1+(uint32_t)(scale))) / 65536;
+	return ((uint32_t) (i) * (1 + (uint32_t) (scale))) / 65536;
 }
 ///@}
 
@@ -128,54 +125,56 @@ LIB8STATIC uint16_t scale16( uint16_t i, fract16 scale )
 ///@{
 
 /// Adjust a scaling value for dimming
-LIB8STATIC uint8_t dim8_raw( uint8_t x)
+LIB8STATIC uint8_t dim8_raw(uint8_t x)
 {
-    return scale8( x, x);
+	return scale8(x, x);
 }
 
 /// Adjust a scaling value for dimming for video (value will never go below 1)
-LIB8STATIC uint8_t dim8_video( uint8_t x)
+LIB8STATIC uint8_t dim8_video(uint8_t x)
 {
-    return scale8_video( x, x);
+	return scale8_video(x, x);
 }
 
 /// Linear version of the dimming function that halves for values < 128
-LIB8STATIC uint8_t dim8_lin( uint8_t x )
+LIB8STATIC uint8_t dim8_lin(uint8_t x)
 {
-    if( x & 0x80 ) {
-        x = scale8( x, x);
-    } else {
-        x += 1;
-        x /= 2;
-    }
-    return x;
+	if (x & 0x80) {
+		x = scale8(x, x);
+	}
+	else {
+		x += 1;
+		x /= 2;
+	}
+	return x;
 }
 
 /// inverse of the dimming function, brighten a value
-LIB8STATIC uint8_t brighten8_raw( uint8_t x)
+LIB8STATIC uint8_t brighten8_raw(uint8_t x)
 {
-    uint8_t ix = 255 - x;
-    return 255 - scale8( ix, ix);
+	uint8_t ix = 255 - x;
+	return 255 - scale8(ix, ix);
 }
 
 /// inverse of the dimming function, brighten a value
-LIB8STATIC uint8_t brighten8_video( uint8_t x)
+LIB8STATIC uint8_t brighten8_video(uint8_t x)
 {
-    uint8_t ix = 255 - x;
-    return 255 - scale8_video( ix, ix);
+	uint8_t ix = 255 - x;
+	return 255 - scale8_video(ix, ix);
 }
 
 /// inverse of the dimming function, brighten a value
-LIB8STATIC uint8_t brighten8_lin( uint8_t x )
+LIB8STATIC uint8_t brighten8_lin(uint8_t x)
 {
-    uint8_t ix = 255 - x;
-    if( ix & 0x80 ) {
-        ix = scale8( ix, ix);
-    } else {
-        ix += 1;
-        ix /= 2;
-    }
-    return 255 - ix;
+	uint8_t ix = 255 - x;
+	if (ix & 0x80) {
+		ix = scale8(ix, ix);
+	}
+	else {
+		ix += 1;
+		ix /= 2;
+	}
+	return 255 - ix;
 }
 
 ///@}

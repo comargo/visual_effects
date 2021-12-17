@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 RGB hsv2rgb_raw(HSV hsv);
-RGB hsv2rgb_spectrum( HSV hsv);
-RGB hsv2rgb_rainbow( HSV hsv);
+RGB hsv2rgb_spectrum(HSV hsv);
+RGB hsv2rgb_rainbow(HSV hsv);
 
 #endif /* HSV2RGB_H_ */

@@ -46,7 +46,6 @@ DECLARE_PALETTE(PartyColors_p16);
 /// which looks wrong.
 DECLARE_PALETTE(HeatColors_p16);
 
-
-DECLARE_GRADIENT_PALETTE( Rainbow_gp);
+DECLARE_GRADIENT_PALETTE(Rainbow_gp);
 
 #endif /* COLORPALETTES_H_ */
